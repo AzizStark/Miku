@@ -1,1 +1,1 @@
-miku.azizstark.com 💃🏻
+https://miku.azizstark.com 💃🏻
