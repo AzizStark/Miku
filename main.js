@@ -1,7 +1,4 @@
 import * as THREE from "three";
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
-import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import WebGL from "three/addons/capabilities/WebGL.js";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 
 let mixer;
@@ -27,19 +24,6 @@ const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.shadowMap.enabled = true; // Enable shadow mapping
 document.body.appendChild(renderer.domElement);
-
-// Load the environment map
-const ctloader = new THREE.CubeTextureLoader();
-const environmentMap = ctloader.load([
-  "path/to/px.jpg", // Positive X
-  "path/to/nx.jpg", // Negative X
-  "path/to/py.jpg", // Positive Y
-  "path/to/ny.jpg", // Negative Y
-  "path/to/pz.jpg", // Positive Z
-  "path/to/nz.jpg", // Negative Z
-]);
-scene.background = environmentMap;
-scene.environment = environmentMap;
 
 // Create a geometry (cube)
 // const geometry = new THREE.BoxGeometry();
@@ -85,12 +69,6 @@ scene.add(directionalLight);
 const hemisphereLight = new THREE.HemisphereLight(0x87ceeb, 0x444444, 1); // Sky color, ground color, intensity
 hemisphereLight.position.set(220, 200, 110);
 scene.add(hemisphereLight);
-
-// Configure shadow properties for the directional light
-directionalLight.shadow.mapSize.width = 1024; // Default is 512
-directionalLight.shadow.mapSize.height = 1024; // Default is 512
-directionalLight.shadow.camera.near = 1.5; // Default is 0.5
-directionalLight.shadow.camera.far = 40; // Default is 500
 
 // const geometry2 = new THREE.OctahedronGeometry(1, 5);
 // const material2 = new THREE.MeshStandardMaterial({
@@ -141,8 +119,86 @@ const loader = new FBXLoader();
 
 let hatsuneModel = undefined;
 
+// loader.load(
+//   "./models/latest.fbx",
+//   function (gltf) {
+//     hatsuneModel = gltf;
+
+//     hatsuneModel.traverse(function (node) {
+//       if (node.isMesh) {
+//         if (node.material) {
+//           node.material.transparent = false;
+//           node.material.opacity = 1;
+//           node.material.depthWrite = true;
+//         }
+//       }
+//     });
+
+//     hatsuneModel.position.set(1, -2, 0); // Position the model near the cube
+//     hatsuneModel.rotation.x = 0.6;
+//     hatsuneModel.scale.set(2.7, 2.7, 2.7);
+//     hatsuneModel.traverse(function (node) {
+//       if (node.isMesh) {
+//         node.castShadow = true;
+//         node.receiveShadow = true;
+//       }
+//     });
+//     scene.add(hatsuneModel);
+
+//     // Load the FBX animation
+//     loader.load("./models/Samba_Miku.fbx", function (anim) {
+//       mixer = new THREE.AnimationMixer(hatsuneModel);
+//       const action = mixer.clipAction(anim.animations[0]);
+//       action.play();
+//     });
+//   },
+//   undefined,
+//   function (error) {
+//     console.error(error);
+//   }
+// );
+
+// loader.load(
+//   "./models/boy_model.fbx",
+//   function (gltf) {
+//     hatsuneModel = gltf;
+
+//     hatsuneModel.traverse(function (node) {
+//       if (node.isMesh) {
+//         if (node.material) {
+//           node.material.transparent = false;
+//           node.material.opacity = 1;
+//           node.material.depthWrite = true;
+//         }
+//       }
+//     });
+
+//     hatsuneModel.position.set(1, -2, 0); // Position the model near the cube
+//     hatsuneModel.rotation.x = 0.61;
+//     hatsuneModel.scale.set(0.03, 0.03, 0.03);
+//     hatsuneModel.traverse(function (node) {
+//       if (node.isMesh) {
+//         node.castShadow = true;
+//         node.receiveShadow = true;
+//       }
+//     });
+//     scene.add(hatsuneModel);
+
+//     // Load the FBX animation
+//     loader.load("./models/boy_model_animation.fbx", function (anim) {
+//       mixer = new THREE.AnimationMixer(hatsuneModel);
+//       const action = mixer.clipAction(anim.animations[0]);
+//       action.play();
+//     });
+//   },
+//   undefined,
+//   function (error) {
+//     console.error(error);
+//   }
+// );
+
 loader.load(
-  "./models/latest.fbx",
+  "./models/boy_model_2.fbx",
   function (gltf) {
     hatsuneModel = gltf;
 
@@ -156,9 +212,9 @@ loader.load(
       }
     });
 
-    hatsuneModel.position.set(1, -2, 0); // Position the model near the cube
-    hatsuneModel.rotation.x = 0.6;
-    hatsuneModel.scale.set(3, 3, 3);
+    hatsuneModel.position.set(1, -2.01, 0); // Position the model near the cube
+    hatsuneModel.rotation.x = 0.55;
+    hatsuneModel.scale.set(0.03, 0.03, 0.03);
     hatsuneModel.traverse(function (node) {
       if (node.isMesh) {
         node.castShadow = true;
@@ -168,7 +224,7 @@ loader.load(
     scene.add(hatsuneModel);
 
     // Load the FBX animation
-    loader.load("./models/Samba_Miku.fbx", function (anim) {
+    loader.load("./models/boy_model_2_animation.fbx", function (anim) {
       mixer = new THREE.AnimationMixer(hatsuneModel);
       const action = mixer.clipAction(anim.animations[0]);
       action.play();
